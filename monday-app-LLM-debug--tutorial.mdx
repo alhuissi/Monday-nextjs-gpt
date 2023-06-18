@@ -20,19 +20,19 @@ First, [create a Monday.com developer account(https://auth.monday.com/users/sign
 
 After finishing setting your account, log in to your Monday.com dashboard and press the blue button on the left panel to add a new item to your workspace. Click on "Choose from template" and then select the Product Development template. Click on "Use template".
 
-<Img alt="Monday.com dashboard" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/1-Add-Monday-template-min.png" />
+<Img caption={"Monday dashboard"} alt="Monday.com dashboard" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/1-Add-Monday-template-min.png" />
 
 This should add the template on your dashboard, with a Bug Queue board, which we will use later to fetch Bug descriptions and send them to GPT. Add a new column to the Incoming Bugs table and call it "Suggestions". Your dashboard should look like this:
 
-<Img alt="Monday.com product development, bug queue" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/2-Bugs-suggestions-min.png" />
+<Img caption={"Product development template"}  alt="Monday.com product development, bug queue" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/2-Bugs-suggestions-min.png" />
 
 Now, click on your avatar -> Developers and press the "Create app" button. Let's call it Debug Assistant.
 
-<Img alt="Monday.com create app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/3-Monday-create-app-min.png" />
+<Img caption={"Create app"} alt="Monday.com create app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/3-Monday-create-app-min.png" />
 
 Go to the OAuth section of your app, and add add the following permissions: "me:read", "boards:read" and "boards:write"
 
-<Img alt="Monday.com OAuth" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/3b-Oauth-min.png" />
+<Img caption={"App permissions"} alt="Monday.com OAuth" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/3b-Oauth-min.png" />
 
 We can now proceed to the installation.
 
@@ -72,45 +72,45 @@ ngrok http 3000
 
 This will expose your local server trough a public URL. Save that URL.
 
-<Img alt="Ngrok URL" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/4-Ngrok-min.png" />
+<Img caption={"Ngrok tunnel"} alt="Ngrok URL" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/4-Ngrok-min.png" />
 
 ### Connecting to Monday
 
 Go back to your Monday app and add a new feature. Choose the Dashboard Widgets option, then "Start from scratch".
 
-<Img alt="Monday.com create feature" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/5-Monday-add-feature-widget-min.png" />
+<Img caption={"Create feature"} alt="Monday.com create feature" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/5-Monday-add-feature-widget-min.png" />
 
 Let's call our feature "Debug Widget" and go to the "Widget Setup" tab. Select "Custom URL" as source, paste your ngrok URL and click on "View URL".
 
 Note: If you restart the ngrok server, the URL will change and you will have to change it here too.
 
-<Img alt="Monday.com Build URL" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/6-Build-URL-min.png" />
+<Img caption={"Custom URL"} alt="Monday.com Build URL" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/6-Build-URL-min.png" />
 
 You should be able to see your local app running inside an iframe. This means the app is connected to Monday.com!
 
-<Img alt="Monday.com app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/7-Monday-app-min.png" />
+<Img caption={"Local app running on Monday.com"} alt="Monday.com app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/7-Monday-app-min.png" />
 
 Now change the source to Published Build, click on the "New build" button, and add your ngrok URL.
 
-<Img alt="Monday.com Build URL" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/6b-New-build-min.png" />
+<Img caption={"Build URL"} alt="Monday.com Build URL" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/6b-New-build-min.png" />
 
 Note: This build is intended for development only, and it will work as long your ngrok is running with the same URL. In other words, everytime you restart your ngrok server, you will have to create a new build with the new URL.
 
 Go now to your app's dashboard, click on App Versions. Click on the three dots of your app's first version, and publish it.
 
-<Img alt="Monday.com publish app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/9-Monday-publish-app-min.png" />
+<Img caption={"Publish app"} alt="Monday.com publish app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/9-Monday-publish-app-min.png" />
 
 Then, on your app's dashboard again, click on "Install" on the left menu and then on the "Install app" button.
 
-<Img alt="Monday.com install app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/10-Monday-install-app-min.png" />
+<Img caption={"Install app"} alt="Monday.com install app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/10-Monday-install-app-min.png" />
 
 Your should now be able to add your app to your Monday board. Go back to your workspace, and open the Bug Insights view on the Bug Queue board, then click on Add Widget -> Apps.
 
-<Img alt="Monday.com add widget" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/11-Add-widget-min.png" />
+<Img caption={"Add Widget"} alt="Monday.com add widget" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/11-Add-widget-min.png" />
 
 Go to Installed apps and add the Debug Widget to the board.
 
-<Img alt="Monday.com add widget" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/11b-add-widget-min.png" />
+<Img caption={"Debug Widget"} alt="Monday.com add widget" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/11b-add-widget-min.png" />
 
 You should see the app running inside the widget. Awesome, we are finaly ready to start coding!
 
@@ -119,7 +119,7 @@ You should see the app running inside the widget. Awesome, we are finaly ready t
 
 Go back to your code editor, and copy the boilerplate file located at monday-ai-prompt-template/src/examples/livestream-example/boilerplate.tsx, then paste it in the same directory and rename it to "debug-assistant.tsx". We will write most of our code here.
 
-<Img alt="Debug assistant typescript file" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/8-Debug-assistant-tsx-min.png" />
+<Img caption={"Monday.com template"} alt="Debug assistant typescript file" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/8-Debug-assistant-tsx-min.png" />
 
 Change the component function name from "LivestreamExample" to "DebugAssistant" in line 64 and don't forget to rename the export function too at the end of the file:
 
@@ -340,7 +340,7 @@ We are ready to start testing our app! Go back to Bug Queue -> Bug Insights boar
 
 On the first dropdown select "Incoming Bugs" group, and on the second dropdown select "Suggestions" as output. Then write the following on the text input: "Write a short technical solution for this bug description: @Bug Description" (You should be able to select "Bug Description" after the @). Send the request.
 
-<Img alt="Monday.com widget demo" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/12-Demo-min.png" />
+<Img caption={"Demo"} alt="Monday.com widget demo" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/12-Demo-min.png" />
 
 🎉 There you go! You should see the Suggestions column being filled up after a few seconds.
 
