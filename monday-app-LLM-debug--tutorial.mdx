@@ -1,6 +1,6 @@
 ---
-title: "Monday.com + GPT app tutorial: How to make a debugging assistant"
-description: "A step by step guide on how to create a debugging assistant with NextJS, ChatGPT and Monday.com. Learn with lablab.ai"
+title: "Monday.com + GPT app tutorial: How to make a debug assistant"
+description: "A step by step guide on how to create a debug assistant with NextJS, ChatGPT and Monday.com. Learn with lablab.ai"
 authorUsername: "alfredo_lhuissier73"
 ---
 
@@ -8,7 +8,7 @@ authorUsername: "alfredo_lhuissier73"
 
 ---
 
-Every programmer knows the pain of debugging. From trying identifying the culprit to trying old Stack Overflow solutions, the process can be long and frustrating. Well, we're here to help! We are going to build a NextJS app that integrates with your Monday.com bug queue board, reads a description of the problem and then automatically makes clever suggestions on how to fix it.
+Every programmer knows the pain of debugging. From trying to identify the culprit to navigating old Stack Overflow posts, the process can be long and frustrating. We're here to help! We are going to build a NextJS app that integrates with Monday's Incoming Bugs board, reads the description of the problem and then automatically populates another column with suggestions on how to fix it.
 
 ## What is Monday.com?
 
@@ -18,15 +18,15 @@ Monday.com is a customizable web and mobile work management platform, designed t
 
 First, [create a Monday.com developer account(https://auth.monday.com/users/sign_up_new?developer=true?utm_medium=affiliates&utm_source=lablabai&utm_campaign=ai_app_hackathon)] if you haven't already.
 
-After finishing setting your account, log in to your Monday.com dashboard and press the blue button on the left panel to add a new item to your workspace. Click on "Choose from template" and then select the Product Development template. Then click on "Use template".
+After finishing setting your account, log in to your Monday.com dashboard and press the blue button on the left panel to add a new item to your workspace. Click on "Choose from template" and then select the Product Development template. Click on "Use template".
 
 <Img alt="Monday.com dashboard" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/1-Add-Monday-template-min.png" />
 
-This should add the template on your dashboard, with a Bug Queue board, which we will use later to fetch the Bug column and send it to GPT. Add a new column to the Incoming Bugs table and name it Suggestions. Your dashboard should look like this:
+This should add the template on your dashboard, with a Bug Queue board, which we will use later to fetch Bug descriptions and send them to GPT. Add a new column to the Incoming Bugs table and call it "Suggestions". Your dashboard should look like this:
 
 <Img alt="Monday.com product development, bug queue" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/2-Bugs-suggestions-min.png" />
 
-Now, click on your avatar -> Developers and press the "Create app" button then give it a name (e.g Debug Assistant).
+Now, click on your avatar -> Developers and press the "Create app" button. Let's call it Debug Assistant.
 
 <Img alt="Monday.com create app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/3-Monday-create-app-min.png" />
 
@@ -38,7 +38,7 @@ We can now proceed to the installation.
 
 ## 🤖 Installation
 
-To get a head start, we are going to use a NextJS app template from Monday.com that provides ready-to-use React components and context, so we can focus on working with the AI part. You can later modify these to improve UI/UX.
+To get a head start, we are going to use a NextJS app template from Monday.com that provides ready-to-use React components and context. You can later modify these to improve the UI/UX.
 
 Clone and install the template:
 
@@ -48,7 +48,7 @@ cd monday-ai-prompt-template
 npm i
 ```
 
-Open your .env file and paste your MONDAY_API_KEY token and [OPENAI_API_KEY(https://beta.openai.com/account/api-keys)] values.
+Open your .env file and paste your [OPENAI_API_KEY(https://beta.openai.com/account/api-keys)] values.
 
 We can now start our development server running:
 
@@ -80,7 +80,7 @@ Go back to your Monday app and add a new feature. Choose the Dashboard Widgets o
 
 <Img alt="Monday.com create feature" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/5-Monday-add-feature-widget-min.png" />
 
-Give it a name (e.g Debug Widget) and go to the "Widget Setup" tab. Select "Custom URL" as source, paste your ngrok URL and click on "View URL".
+Let's call our feature "Debug Widget" and go to the "Widget Setup" tab. Select "Custom URL" as source, paste your ngrok URL and click on "View URL".
 
 Note: If you restart the ngrok server, the URL will change and you will have to change it here too.
 
@@ -100,7 +100,7 @@ Go now to your app's dashboard, click on App Versions. Click on the three dots o
 
 <Img alt="Monday.com publish app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/9-Monday-publish-app-min.png" />
 
-Then on your app's dashboard again, click on "Install" on the left menu and then on the "Install app" button.
+Then, on your app's dashboard again, click on "Install" on the left menu and then on the "Install app" button.
 
 <Img alt="Monday.com install app" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/10-Monday-install-app-min.png" />
 
@@ -112,15 +112,16 @@ Go to Installed apps and add the Debug Widget to the board.
 
 <Img alt="Monday.com add widget" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/11b-add-widget-min.png" />
 
-You should see the app running inside the widget. Awesome, we are finnaly ready to start coding!
+You should see the app running inside the widget. Awesome, we are finaly ready to start coding!
+
 
 ## 🚀 Developing the app
 
-Go back to your code editor, and copy the boilerplate file located at monday-ai-prompt-template/src/examples/livestream-example/boilerplate.tsx, then paste it in the same directory and rename it to "debug-assistant.tsx". We will write most of our code logic here.
+Go back to your code editor, and copy the boilerplate file located at monday-ai-prompt-template/src/examples/livestream-example/boilerplate.tsx, then paste it in the same directory and rename it to "debug-assistant.tsx". We will write most of our code here.
 
 <Img alt="Debug assistant typescript file" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/8-Debug-assistant-tsx-min.png" />
 
-Change the component function name from "LivestreamExample" to "DebugAssistant" in line 64 and don't forget to rename the export function too on line 131:
+Change the component function name from "LivestreamExample" to "DebugAssistant" in line 64 and don't forget to rename the export function too at the end of the file:
 
 ```javascript
 const DebugAssistant = ({ initialInput = "" }: Props): JSX.Element => {
@@ -130,7 +131,7 @@ const DebugAssistant = ({ initialInput = "" }: Props): JSX.Element => {
 export default DebugAssistant;
 ```
 
-Now open the app's main page located at monday-ai-prompt-template/src/app/page.tsx (since NextJS v13), comment out or remove the <ContextExplorerExample /> component, and add our new DebugAssistant component.
+Now open the app's main page located at monday-ai-prompt-template/src/app/page.tsx [since NextJS v13(https://nextjs.org/blog/next-13)], comment out or remove <ContextExplorerExample />, and add the DebugAssistant component.
 
 ```javascript
 ...
@@ -150,7 +151,7 @@ export default function Home() {
 }
 ```
 
-We are going to reuse a lot of the code used by Monday's template, with some tweaks to get it working on our development server.
+We are going to reuse a lot of code from Monday's template, adding some tweaks to get it working on our development server.
 
 Go to debug-assistant.tsx, then import dynamic from next and also Monday's Dropdown component:
 
@@ -220,7 +221,7 @@ async function getItemsAndColumnValues(selectedGroup, context, columnIds) {
         columnIds,
         boardId:
           context?.iframeContext?.boardId ??
-          context?.iframeContext?.boardIds ?? // <-- add this line
+          context?.iframeContext?.boardIds ?? // <-- ADD THIS
           [],
         groupId: selectedGroup,
       },
@@ -230,7 +231,7 @@ async function getItemsAndColumnValues(selectedGroup, context, columnIds) {
 ...
 ```
 
-Now add the following to your handleSend() function:
+Now write the code for the handleSend() function:
 
 ```javascript
 const handleSend = useCallback(
@@ -306,7 +307,7 @@ const handleSend = useCallback(
 
 This will send the prompts to OpenAI and then make the GraphQL mutations to update the column we want.
 
-We are almost done. There is a bug on newer versions of NextJS (~13.4.x) related to fetching request on localhost. To circumvent this, open the app/api/openai/route.ts file, and add this at the end:
+We are almost done. There is a bug on newer versions of NextJS (~13.4.x) related to [fetching requests on localhost(https://github.com/vercel/next.js/issues/44712)]. To circumvent this, open the app/api/openai/route.ts file, and add this at the end:
 
 ```javascript
 ...
@@ -333,7 +334,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
 }
 ```
 
-This is fine during development, but you must remember to add the verification again before pushing to product. The changes we just did on route.ts are only necessary to make it all work on our local setting.
+This is fine during development, but you must remember to add the verification again before pushing to product. The changes we just did on route.ts are only necessary to make it all work with our local context.
 
 We are ready to start testing our app! Go back to Bug Queue -> Bug Insights board on Monday.com, and open the Debug Widget. The new UI should be running inside it. You might need to reload the page.
 
@@ -341,12 +342,12 @@ On the first dropdown select "Incoming Bugs" group, and on the second dropdown s
 
 <Img alt="Monday.com widget demo" src="https://raw.githubusercontent.com/alhuissi/Monday-nextjs-gpt/main/12-Demo-min.png" />
 
-There you go! You should see the Suggestions column being filled up after a few seconds.
+🎉 There you go! You should see the Suggestions column being filled up after a few seconds.
 
 
 ## 🤔 Final Thoughts
 
-We learned how to create a Monday app and connect it to an LLM through a local development server. Now you can change the UI, refine the prompts and play with it as much as you want. The sky is the limit! Whenever you fell your app is ready, you should deploy it to a production server and configure it accordingly. That is all for this tutorial, I hope it will help you navigate all the different parts of the Monday.com app framework.
+We learned how to create a Monday app and connect it to an LLM through a local development server. Now, you are free to change the UI, refine the prompts and play with it as much as you want. The sky is the limit! Whenever your app is ready, you should deploy it to a production server and configure it accordingly. That is all for this tutorial, I hope it will help you navigate all the different parts of the Monday.com app framework.
 
 And practice what you've learn here during our amazing [AI Hackathons](https://lablab.ai/event)!
 Join the AI revolution!
